@@ -137,6 +137,7 @@ public class NewRandomizerGUI {
     private JCheckBox tpRandomizeTrainerNamesCheckBox;
     private JCheckBox tpRandomizeTrainerClassNamesCheckBox;
     private JCheckBox tpForceFullyEvolvedAtCheckBox;
+    private JCheckBox tpDisallowDuplicatesCheckBox;
     private JSlider tpForceFullyEvolvedAtSlider;
     private JSlider tpPercentageLevelModifierSlider;
     private JCheckBox tpEliteFourUniquePokemonCheckBox;
@@ -1541,6 +1542,7 @@ public class NewRandomizerGUI {
         tpSimilarStrengthCheckBox.setSelected(settings.isTrainersUsePokemonOfSimilarStrength());
         tpComboBox.setSelectedItem(trainerSettings.get(settings.getTrainersMod().ordinal()));
         tpRivalCarriesStarterCheckBox.setSelected(settings.isRivalCarriesStarterThroughout());
+        tpDisallowDuplicatesCheckBox.setSelected(settings.isDisallowDuplicates());
         tpWeightTypesCheckBox.setSelected(settings.isTrainersMatchTypingDistribution());
         tpDontUseLegendariesCheckBox.setSelected(settings.isTrainersBlockLegendaries());
         tpNoEarlyWonderGuardCheckBox.setSelected(settings.isTrainersBlockEarlyWonderGuard());
@@ -1782,6 +1784,7 @@ public class NewRandomizerGUI {
                 isTrainerSetting(TRAINER_TYPE_THEMED), isTrainerSetting(TRAINER_TYPE_THEMED_ELITE4_GYMS));
         settings.setTrainersUsePokemonOfSimilarStrength(tpSimilarStrengthCheckBox.isSelected());
         settings.setRivalCarriesStarterThroughout(tpRivalCarriesStarterCheckBox.isSelected());
+        settings.setDisallowDuplicates(tpDisallowDuplicatesCheckBox.isSelected());
         settings.setTrainersMatchTypingDistribution(tpWeightTypesCheckBox.isSelected());
         settings.setTrainersBlockLegendaries(tpDontUseLegendariesCheckBox.isSelected());
         settings.setTrainersBlockEarlyWonderGuard(tpNoEarlyWonderGuardCheckBox.isSelected());
@@ -2294,6 +2297,9 @@ public class NewRandomizerGUI {
         tpRivalCarriesStarterCheckBox.setVisible(true);
         tpRivalCarriesStarterCheckBox.setEnabled(false);
         tpRivalCarriesStarterCheckBox.setSelected(false);
+        tpDisallowDuplicatesCheckBox.setVisible(true);
+        tpDisallowDuplicatesCheckBox.setEnabled(false);
+        tpDisallowDuplicatesCheckBox.setSelected(false);
         tpSimilarStrengthCheckBox.setVisible(true);
         tpSimilarStrengthCheckBox.setEnabled(false);
         tpSimilarStrengthCheckBox.setSelected(false);
@@ -3361,6 +3367,7 @@ public class NewRandomizerGUI {
             tpDontUseLegendariesCheckBox.setEnabled(true);
             tpNoEarlyWonderGuardCheckBox.setEnabled(true);
             tpAllowAlternateFormesCheckBox.setEnabled(true);
+            tpDisallowDuplicatesCheckBox.setEnabled(true);
             if (currentRestrictions == null || currentRestrictions.allowTrainerSwapMegaEvolvables(
                     romHandler.forceSwapStaticMegaEvos(), isTrainerSetting(TRAINER_TYPE_THEMED))) {
                 tpSwapMegaEvosCheckBox.setEnabled(true);
@@ -3431,6 +3438,8 @@ public class NewRandomizerGUI {
             tpRivalCarriesStarterCheckBox.setEnabled(false);
             tpRivalCarriesStarterCheckBox.setSelected(false);
         }
+
+
 
         if (isTrainerSetting(TRAINER_TYPE_THEMED)) {
             tpWeightTypesCheckBox.setEnabled(true);

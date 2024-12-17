@@ -190,6 +190,7 @@ public class Settings {
     private boolean doubleBattleMode;
     private boolean shinyChance;
     private boolean betterTrainerMovesets;
+    private boolean disallowDuplicates;
 
     public enum WildPokemonMod {
         UNCHANGED, RANDOM, AREA_MAPPING, GLOBAL_MAPPING
@@ -1548,6 +1549,14 @@ public class Settings {
 
     public boolean isTrainersUsePokemonOfSimilarStrength() {
         return trainersUsePokemonOfSimilarStrength;
+    }
+
+    public void setDisallowDuplicates(boolean disallowDuplicates) {
+        this.disallowDuplicates = disallowDuplicates;
+    }
+
+    public boolean isDisallowDuplicates() {
+        return disallowDuplicates;
     }
 
     public void setTrainersUsePokemonOfSimilarStrength(boolean trainersUsePokemonOfSimilarStrength) {

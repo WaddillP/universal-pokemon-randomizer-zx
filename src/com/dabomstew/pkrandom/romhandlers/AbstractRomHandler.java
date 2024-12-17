@@ -1674,6 +1674,7 @@ public abstract class AbstractRomHandler implements RomHandler {
         int forceFullyEvolvedLevel = settings.getTrainersForceFullyEvolvedLevel();
         boolean forceChallengeMode = (settings.getCurrentMiscTweaks() & MiscTweak.FORCE_CHALLENGE_MODE.getValue()) > 0;
         boolean rivalCarriesStarter = settings.isRivalCarriesStarterThroughout();
+        boolean disallowDuplicates = settings.isDisallowDuplicates();
 
         checkPokemonRestrictions();
 
@@ -1886,7 +1887,6 @@ public abstract class AbstractRomHandler implements RomHandler {
                 if (willForceEvolve) {
                     bannedList.addAll(evolvesIntoTheWrongType);
                 }
-
                 Pokemon newPK = pickTrainerPokeReplacement(
                                 oldPK,
                                 usePowerLevels,
@@ -1898,6 +1898,7 @@ public abstract class AbstractRomHandler implements RomHandler {
                                 abilitiesAreRandomized,
                                 includeFormes,
                                 banIrregularAltFormes,
+                                disallowDuplicates,
                                 alreadyUsedForThisTrainer
                         );
 
@@ -1909,7 +1910,15 @@ public abstract class AbstractRomHandler implements RomHandler {
                 setFormeForTrainerPokemon(tp, newPK);
                 tp.abilitySlot = getRandomAbilitySlot(newPK);
                 tp.resetMoves = true;
-                alreadyUsedForThisTrainer.add(newPK);
+
+                if (disallowDuplicates) {
+                    if (willForceEvolve) {
+                        alreadyUsedForThisTrainer.addAll(relatedPokemon(newPK));
+                    }
+                    alreadyUsedForThisTrainer.add(newPK);
+                    
+                }
+
                 if (!eliteFourRival) {
                     if (eliteFourSetUniquePokemon) {
                         List<Pokemon> actualPKList;
@@ -6852,7 +6861,7 @@ public abstract class AbstractRomHandler implements RomHandler {
                                                boolean noLegendaries, boolean wonderGuardAllowed,
                                                boolean usePlacementHistory, boolean swapMegaEvos,
                                                boolean abilitiesAreRandomized, boolean allowAltFormes,
-                                               boolean banIrregularAltFormes, List<Pokemon> alreadyUsedForThisTrainer) {
+                                               boolean banIrregularAltFormes, boolean disallowDuplicates, List<Pokemon> alreadyUsedForThisTrainer) {
         List<Pokemon> pickFrom;
         List<Pokemon> withoutBannedPokemon;
 
@@ -6904,8 +6913,13 @@ public abstract class AbstractRomHandler implements RomHandler {
                 pickFrom = cachedReplacementLists.get(type);
             }
         }
-        withoutBannedPokemon = pickFrom.stream().filter(pk -> !alreadyUsedForThisTrainer.contains(pk)).collect(Collectors.toList());
-        withoutBannedPokemon = pickFrom.stream().filter(pk -> !bannedList.contains(pk)).collect(Collectors.toList());
+        if (disallowDuplicates) {
+            withoutBannedPokemon = pickFrom.stream().filter(pk -> !alreadyUsedForThisTrainer.contains(pk)).collect(Collectors.toList());
+            withoutBannedPokemon = withoutBannedPokemon.stream().filter(pk -> !bannedList.contains(pk)).collect(Collectors.toList());
+        }
+        else{
+            withoutBannedPokemon = pickFrom.stream().filter(pk -> !bannedList.contains(pk)).collect(Collectors.toList());
+        }
         if (!withoutBannedPokemon.isEmpty()) {
             pickFrom = withoutBannedPokemon;
         }
