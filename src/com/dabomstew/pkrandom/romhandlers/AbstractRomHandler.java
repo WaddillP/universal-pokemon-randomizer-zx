@@ -395,8 +395,11 @@ public abstract class AbstractRomHandler implements RomHandler {
                         // If any of the targets here evolve, the original
                         // Pokemon has 2+ stages.
                         if (ev.to.evolutionsFrom.size() > 0) {
-                            twoEvoPokes.add(pk);
-                            break;
+                            if (ev.to.evolutionsFrom.get(0).to.bstForPowerLevels() >= 520) {
+                                twoEvoPokes.add(pk);
+                                break;
+                            }
+
                         }
                     }
                 }
