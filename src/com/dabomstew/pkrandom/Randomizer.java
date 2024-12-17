@@ -228,7 +228,8 @@ public class Randomizer {
 
         // Easier evolutions
         if (settings.isMakeEvolutionsEasier()) {
-            romHandler.condenseLevelEvolutions(40, 30);
+            // Changed intermediate from 30
+            romHandler.condenseLevelEvolutions(40, 27);
             romHandler.makeEvolutionsEasier(settings);
         }
 
