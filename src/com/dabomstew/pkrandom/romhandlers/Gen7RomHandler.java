@@ -34,12 +34,11 @@ import com.dabomstew.pkrandom.ctr.GARCArchive;
 import com.dabomstew.pkrandom.ctr.Mini;
 import com.dabomstew.pkrandom.exceptions.RandomizerIOException;
 import com.dabomstew.pkrandom.pokemon.*;
-import pptxt.N3DSTxtHandler;
-
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
+import pptxt.N3DSTxtHandler;
 
 public class Gen7RomHandler extends Abstract3DSRomHandler {
 
@@ -2812,20 +2811,20 @@ public class Gen7RomHandler extends Abstract3DSRomHandler {
     public void makeEvolutionsEasier(Settings settings) {
         boolean wildsRandomized = !settings.getWildPokemonMod().equals(Settings.WildPokemonMod.UNCHANGED);
 
-        // Reduce the amount of happiness required to evolve.
+        // Reduce the amount of happiness required to evolve. made 50 from hunter
         int offset = find(code, Gen7Constants.friendshipValueForEvoLocator);
         if (offset > 0) {
             // Amount of required happiness for HAPPINESS evolutions.
             if (code[offset] == (byte)220) {
-                code[offset] = (byte)160;
+                code[offset] = (byte)50;
             }
             // Amount of required happiness for HAPPINESS_DAY evolutions.
             if (code[offset + 12] == (byte)220) {
-                code[offset + 12] = (byte)160;
+                code[offset + 12] = (byte)50;
             }
             // Amount of required happiness for HAPPINESS_NIGHT evolutions.
             if (code[offset + 36] == (byte)220) {
-                code[offset + 36] = (byte)160;
+                code[offset + 36] = (byte)50;
             }
         }
 

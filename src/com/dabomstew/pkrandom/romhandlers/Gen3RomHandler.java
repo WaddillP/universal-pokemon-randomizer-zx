@@ -3241,19 +3241,19 @@ public class Gen3RomHandler extends AbstractGBRomHandler {
         // Reduce the amount of happiness required to evolve.
         int offset = find(rom, Gen3Constants.friendshipValueForEvoLocator);
         if (offset > 0) {
-            // Amount of required happiness for HAPPINESS evolutions.
+            // Amount of required happiness for HAPPINESS evolutions. 50 from HUNTER
             if (rom[offset] == (byte)219) {
-                rom[offset] = (byte)159;
+                rom[offset] = (byte)50;
             }
             // FRLG doesn't have code to handle time-based evolutions.
             if (romEntry.romType != Gen3Constants.RomType_FRLG) {
                 // Amount of required happiness for HAPPINESS_DAY evolutions.
                 if (rom[offset + 38] == (byte)219) {
-                    rom[offset + 38] = (byte)159;
+                    rom[offset + 38] = (byte)50;
                 }
                 // Amount of required happiness for HAPPINESS_NIGHT evolutions.
                 if (rom[offset + 66] == (byte)219) {
-                    rom[offset + 66] = (byte)159;
+                    rom[offset + 66] = (byte)50;
                 }
             }
         }

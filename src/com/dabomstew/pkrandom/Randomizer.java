@@ -25,13 +25,12 @@ package com.dabomstew.pkrandom;
 /*--  along with this program. If not, see <http://www.gnu.org/licenses/>.  --*/
 /*----------------------------------------------------------------------------*/
 
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.util.*;
-
 import com.dabomstew.pkrandom.pokemon.*;
 import com.dabomstew.pkrandom.romhandlers.Gen1RomHandler;
 import com.dabomstew.pkrandom.romhandlers.RomHandler;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.*;
 
 // Can randomize a file based on settings. Output varies by seed.
 public class Randomizer {
@@ -228,8 +227,8 @@ public class Randomizer {
 
         // Easier evolutions
         if (settings.isMakeEvolutionsEasier()) {
-            // Changed intermediate from 30
-            romHandler.condenseLevelEvolutions(40, 27);
+            // Changed upper level to 45
+            romHandler.condenseLevelEvolutions(45, 30);
             romHandler.makeEvolutionsEasier(settings);
         }
 

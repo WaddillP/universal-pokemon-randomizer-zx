@@ -24,6 +24,13 @@ package com.dabomstew.pkrandom.romhandlers;
 /*--  along with this program. If not, see <http://www.gnu.org/licenses/>.  --*/
 /*----------------------------------------------------------------------------*/
 
+import com.dabomstew.pkrandom.*;
+import com.dabomstew.pkrandom.constants.*;
+import com.dabomstew.pkrandom.exceptions.RandomizationException;
+import com.dabomstew.pkrandom.exceptions.RandomizerIOException;
+import com.dabomstew.pkrandom.newnds.NARCArchive;
+import com.dabomstew.pkrandom.pokemon.*;
+import compressors.DSDecmp;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
@@ -34,16 +41,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import com.dabomstew.pkrandom.*;
-import com.dabomstew.pkrandom.constants.*;
-import com.dabomstew.pkrandom.exceptions.RandomizationException;
-import com.dabomstew.pkrandom.pokemon.*;
 import pptxt.PPTxtHandler;
-
-import com.dabomstew.pkrandom.exceptions.RandomizerIOException;
-import com.dabomstew.pkrandom.newnds.NARCArchive;
-import compressors.DSDecmp;
 
 public class Gen5RomHandler extends AbstractDSRomHandler {
 
@@ -3194,20 +3192,20 @@ public class Gen5RomHandler extends AbstractDSRomHandler {
     public void makeEvolutionsEasier(Settings settings) {
         boolean wildsRandomized = !settings.getWildPokemonMod().equals(Settings.WildPokemonMod.UNCHANGED);
 
-        // Reduce the amount of happiness required to evolve.
+        // Reduce the amount of happiness required to evolve. (SET TO 50 FROM HUNTER)
         int offset = find(arm9, Gen5Constants.friendshipValueForEvoLocator);
         if (offset > 0) {
             // Amount of required happiness for HAPPINESS evolutions.
             if (arm9[offset] == (byte)220) {
-                arm9[offset] = (byte)160;
+                arm9[offset] = (byte)50;
             }
             // Amount of required happiness for HAPPINESS_DAY evolutions.
             if (arm9[offset + 20] == (byte)220) {
-                arm9[offset + 20] = (byte)160;
+                arm9[offset + 20] = (byte)50;
             }
             // Amount of required happiness for HAPPINESS_NIGHT evolutions.
             if (arm9[offset + 38] == (byte)220) {
-                arm9[offset + 38] = (byte)160;
+                arm9[offset + 38] = (byte)50;
             }
         }
 
